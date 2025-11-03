@@ -43,75 +43,116 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* 🌞 الثيم الفاتح */
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  /* ألوان الهلال */
+  --hilal-blue: #0047ab; /* الأزرق الهلالي */
+  --hilal-dark-blue: #002d73;
+  --hilal-light-blue: #e6f0ff;
+  --hilal-white: #ffffff;
+  --hilal-gray: #f4f6f8;
+
+  /* الخلفيات والنصوص */
+  --background: var(--hilal-white);
+  --foreground: var(--hilal-dark-blue);
+
+  --card: var(--hilal-white);
+  --card-foreground: var(--hilal-dark-blue);
+
+  --popover: var(--hilal-white);
+  --popover-foreground: var(--hilal-dark-blue);
+
+  /* اللون الأساسي للنادي */
+  --primary: var(--hilal-blue);
+  --primary-foreground: var(--hilal-white);
+
+  /* اللون الثانوي */
+  --secondary: var(--hilal-light-blue);
+  --secondary-foreground: var(--hilal-dark-blue);
+
+  /* لهجات وألوان فرعية */
+  --muted: var(--hilal-gray);
+  --muted-foreground: oklch(0.45 0 0);
+  --accent: var(--hilal-light-blue);
+  --accent-foreground: var(--hilal-dark-blue);
+  --destructive: #d32f2f;
+
+  /* حدود وإدخالات */
+  --border: #dce2eb;
+  --input: #dce2eb;
+  --ring: var(--hilal-blue);
+
+  /* مخططات وألوان الرسوم */
+  --chart-1: var(--hilal-blue);
+  --chart-2: #0066cc;
+  --chart-3: #3385ff;
+  --chart-4: #66a3ff;
+  --chart-5: #99c2ff;
+
+  /* الشريط الجانبي */
+  --sidebar: var(--hilal-light-blue);
+  --sidebar-foreground: var(--hilal-dark-blue);
+  --sidebar-primary: var(--hilal-blue);
+  --sidebar-primary-foreground: var(--hilal-white);
+  --sidebar-accent: var(--hilal-light-blue);
+  --sidebar-accent-foreground: var(--hilal-dark-blue);
+  --sidebar-border: #cfd8e3;
+  --sidebar-ring: var(--hilal-blue);
 }
 
+/* 🌙 الثيم الداكن */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --hilal-blue: #0059d6;
+  --hilal-dark-blue: #001a4d;
+  --hilal-light-blue: #003a99;
+  --hilal-white: #e8ebf2;
+
+  --background: var(--hilal-dark-blue);
+  --foreground: var(--hilal-white);
+
+  --card: #0f1a33;
+  --card-foreground: var(--hilal-white);
+
+  --popover: #0f1a33;
+  --popover-foreground: var(--hilal-white);
+
+  --primary: var(--hilal-blue);
+  --primary-foreground: var(--hilal-white);
+
+  --secondary: #002e73;
+  --secondary-foreground: var(--hilal-white);
+
+  --muted: #1b294d;
+  --muted-foreground: #b0b7c3;
+
+  --accent: var(--hilal-blue);
+  --accent-foreground: var(--hilal-white);
+
+  --destructive: #ef4444;
+
+  --border: #1e3260;
+  --input: #1e3260;
+  --ring: var(--hilal-blue);
+
+  --chart-1: var(--hilal-blue);
+  --chart-2: #3b82f6;
+  --chart-3: #60a5fa;
+  --chart-4: #93c5fd;
+  --chart-5: #bfdbfe;
+
+  --sidebar: #0f1a33;
+  --sidebar-foreground: var(--hilal-white);
+  --sidebar-primary: var(--hilal-blue);
+  --sidebar-primary-foreground: var(--hilal-white);
+  --sidebar-accent: #1b294d;
+  --sidebar-accent-foreground: var(--hilal-white);
+  --sidebar-border: #1e3260;
+  --sidebar-ring: var(--hilal-blue);
 }
 
+/* 🌐 القواعد الأساسية */
 @layer base {
   * {
     @apply border-border outline-ring/50;
