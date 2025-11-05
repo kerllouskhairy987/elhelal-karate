@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { House, PanelRightClose } from "lucide-react";
+import { CircleUser, House, PanelRightClose } from "lucide-react";
 import logo from "../../../public/Logo.jpg";
 import Link from "../Link";
 
@@ -18,6 +18,11 @@ const sidebarMenus = [
     label: "الرئيسية",
     icon: House,
     href: "/",
+  },
+  {
+    label: "المدرب",
+    icon: CircleUser,
+    href: "/trainer",
   },
 ];
 
@@ -36,9 +41,8 @@ export default function Sidebar({
       <div className="flex flex-col h-full">
         {/* Header */}
         <div
-          className={`h-[73px] flex items-center border-b border-border transition-all duration-300 ${
-            isOpen ? "p-3" : "p-2 justify-center"
-          }`}
+          className={`h-[73px] flex items-center border-b border-border transition-all duration-300 ${isOpen ? "p-3" : "p-2 justify-center"
+            }`}
         >
           {isOpen ? (
             <div className="flex items-center justify-between w-full">
@@ -77,16 +81,14 @@ export default function Sidebar({
               <Link
                 key={menu.label}
                 href={menu.href ?? "/"}
-                className={`flex items-center text-sm rounded-lg cursor-pointer transition-all duration-200 py-3
-                  ${
-                    isOpen
-                      ? "justify-start text-right px-3"
-                      : "justify-center px-0"
+                className={`flex items-center mb-4 text-sm rounded-lg cursor-pointer transition-all duration-200 py-3
+                  ${isOpen
+                    ? "justify-start text-right px-3"
+                    : "justify-center px-0"
                   }
-                  ${
-                    isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  ${isActive
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                   }`}
               >
                 <Icon className={`w-5 h-5 ${isOpen ? "ml-2" : ""}`} />

@@ -3,6 +3,7 @@ import { Cairo } from "next/font/google";
 import "./globals.css";
 import Layout from "@/components/ui/Layout";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ToastContainer } from 'react-toastify';
 
 const cairo = Cairo({
   subsets: ["arabic"],
@@ -31,6 +32,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <ToastContainer position="bottom-center" />
           <Layout>{children}</Layout>
         </ThemeProvider>
       </body>

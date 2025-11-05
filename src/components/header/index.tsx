@@ -1,5 +1,5 @@
 import logo from "../../../public/Logo.jpg";
-import {  Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,7 +30,7 @@ export default function Header({
 
   const displayName = "مصطفى مح...";
 
-  const handleLogout = () => {};
+  const handleLogout = () => { };
 
   return (
     <nav

@@ -1,0 +1,10 @@
+task {
+    - ✅ update user
+    - ✅ login
+    - ✅ hash password --> bcrypt
+    - ✅ cookie   --> jsonwebtoken npm [for token]
+}
+
+chatGPT {
+    https://chatgpt.com/c/690a504c-6e84-8331-8abe-647db16c88ef
+}

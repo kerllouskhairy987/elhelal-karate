@@ -48,7 +48,8 @@
   --radius: 0.625rem;
 
   /* ألوان الهلال */
-  --hilal-blue: #0047ab; /* الأزرق الهلالي */
+  --hilal-blue: #0047ab;
+  /* الأزرق الهلالي */
   --hilal-dark-blue: #002d73;
   --hilal-light-blue: #e6f0ff;
   --hilal-white: #ffffff;
@@ -157,7 +158,29 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply container mx-auto px-2 sm:px-4 md:px-8 bg-background text-foreground;
   }
+}
+
+/* for checkbox style */
+input[type="checkbox"] {
+  accent-color: var(--primary);
+}
+
+/* for chadCn Ui */
+html[lang="ar"] div[role="alertdialog"] div,
+html[lang="ar"] div[role="dialog"] div {
+  left: 24px !important;
+  right: auto !important;
+  text-align: right !important;
+}
+
+html[lang="ar"] div[role="dialog"] button[data-slot="dialog-close"] {
+  left: 16px !important;
+  text-align: left !important;
+  margin-right: auto !important;
+  cursor: pointer !important;
+  width: fit-content !important;
 }
