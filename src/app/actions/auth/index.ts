@@ -266,7 +266,7 @@ export const updateUserAction = async (
 }
 
 // Get User Info By Id -----------------------------------
-export async function getUserInfoById(id: number) {
+export async function getUserInfoById(id: string) {
     try {
         const userInfo = await prisma.user.findUnique({
             where: { id },
@@ -279,7 +279,7 @@ export async function getUserInfoById(id: number) {
 }
 
 // Delete User ----------------------------------------
-export async function deleteUserAction(id: number) {
+export async function deleteUserAction(id: string) {
     try {
         const deletedUser = await prisma.user.delete({
             where: { id },

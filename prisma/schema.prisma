@@ -8,13 +8,64 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
-  email     String   @unique @db.VarChar(255)
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
   password  String
   role      UserRole
-  createdAt DateTime @default(now()) @db.Timestamp(6)
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  players Player[]
+}
+
+model Player {
+  id                Int      @id @default(autoincrement())
+  name              String
+  phone             String   @unique
+  birthday          DateTime
+  gender            String
+  nationalNumber    String
+  image             String?
+  contractstartdate DateTime
+  contractenddate   DateTime
+  playerclass       String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  publicId          String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  images Image[]
+
+  attendances Attendance[]
+}
+
+model Image {
+  id       Int    @id @default(autoincrement())
+  url      String
+  publicId String
+  playerId Int
+  player   Player @relation(fields: [playerId], references: [id])
+}
+
+model Attendance {
+  id       Int              @id @default(autoincrement())
+  date     DateTime
+  status   AttendanceStatus
+  note     String?
+  playerId Int
+  player   Player           @relation(fields: [playerId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
 }
 
 enum UserRole {

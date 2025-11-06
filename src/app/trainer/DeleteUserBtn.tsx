@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 
 interface IProps {
-    id: number;
+    id: string;
 }
 const DeleteUserBtn = ({ id }: IProps) => {
     const [isLoading, setIsLoading] = useState(false);

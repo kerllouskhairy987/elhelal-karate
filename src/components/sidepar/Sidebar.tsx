@@ -20,9 +20,14 @@ const sidebarMenus = [
     href: "/",
   },
   {
-    label: "المدرب",
+    label: "المدربين",
     icon: CircleUser,
     href: "/trainer",
+  },
+  {
+    label: "اللاعبين",
+    icon: CircleUser,
+    href: "/player",
   },
 ];
 
