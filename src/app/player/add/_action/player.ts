@@ -22,23 +22,46 @@ export const addPlayer = async (
       formData,
     };
   }
-
   const data = result.data;
+
+  const isExsistsPhone = await prisma.player.findFirst({
+    where: {
+      phone: data.phone,
+    },
+  });
+  if (isExsistsPhone) {
+    return {
+      status: 400,
+      message: "رقم الموبايل موجود بالفعل",
+      formData,
+    };
+  }
+
+  const isExsistsNationalNumber = await prisma.player.findFirst({
+    where: {
+      nationalNumber: data.nationalNumber,
+    },
+  });
+  if (isExsistsNationalNumber) {
+    return {
+      status: 400,
+      message: "رقم الهوية موجود بالفعل",
+      formData,
+    };
+  }
+
   const imageFile = data?.image as unknown as {
     size: number;
     arrayBuffer: () => Promise<ArrayBuffer>;
     type: string;
   };
-  const returnValue = await UploadImage({ imageFile });
+  let returnValue;
+  if (imageFile.size > 0) {
+    returnValue = await UploadImage({ imageFile });
+  }
   const { imageUrl, publicId: uniqueName } = returnValue || {};
 
-  if (typeof imageUrl !== "string") {
-    return {
-      status: 500,
-      message: "فشل رفع الصورة",
-      formData,
-    };
-  }
+
   try {
     await prisma.player.create({
       data: {
@@ -47,7 +70,7 @@ export const addPlayer = async (
         birthday: new Date(data.birthday),
         gender: data.gender,
         nationalNumber: data.nationalNumber,
-        image: imageUrl,
+        image: imageUrl || null,
         userId: args.userId,
         publicId: uniqueName || args.userId,
         contractstartdate: new Date(data.contractstartdate),
@@ -60,7 +83,6 @@ export const addPlayer = async (
     return {
       status: 200,
       message: "تم الحفظ بنجاح",
-      formData,
     };
   } catch (error) {
     console.error("Error saving image locally:", error);

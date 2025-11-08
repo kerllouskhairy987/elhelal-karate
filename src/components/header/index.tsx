@@ -44,7 +44,7 @@ export default function Header({
       await logoutAction();
       setIsLoading(false);
       toast.success("تم تسجيل الخروج بنجاح", { autoClose: 5000 });
-      router.replace("/login");
+      router.push("/login");
 
     } catch (error) {
       console.log(error)

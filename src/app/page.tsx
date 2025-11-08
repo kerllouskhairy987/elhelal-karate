@@ -1,23 +1,29 @@
-import { ModeToggle } from "@/components/ModeToggle";
-import { Button } from "@/components/ui/button";
+import { prisma } from "@/utils/prisma";
+import { ChartsSection } from "./_components/charts-section";
+import { StatsCards } from "./_components/stats-cards";
 
 export default async function Home() {
+  const [players, trainers, attendance] = await Promise.all([
+    prisma.player.findMany(),
+    prisma.user.findMany({ where: { role: "TRAINER" } }),
+    prisma.attendance.findMany({
+      include: {
+        player: true
+      }
+    }),
+  ]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <ModeToggle />
-      <Button>Btn From ShanCn UI</Button>
-
-      <div className="flex bg-red-500 gap-10">
-        <h1>Posts</h1>
-        <ul className="flex gap-10">
-          {[1, 2,3].map((post) => (
-            <div key={post}>
-              <li>{post}</li>
-            </div>
-          ))}
-        </ul>
-      </div>
+    <div className="min-h-screen bg-zinc-50 font-sans dark:bg-black p-6">
+      <StatsCards 
+        players={players}
+        trainers={trainers}
+        attendance={attendance}
+      />
+      <ChartsSection 
+        players={players}
+        attendance={attendance}
+      />
     </div>
   );
 }

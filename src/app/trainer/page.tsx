@@ -12,9 +12,19 @@ import {
 } from "@/components/ui/table";
 import DeleteUserBtn from "./DeleteUserBtn";
 import UpdateUserBtn from "./UpdateUserBtn";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { verifyToken } from "@/utils/verifyToken";
 
 const TrainerPage = async () => {
   // Get All Users
+  const storeCookie = await cookies();
+  const token = storeCookie.get("JwtToken")?.value || "";
+  const user = verifyToken(token);
+  if (!token || !user) {
+    return redirect("/login");
+  }
+
   const users = await prisma.user.findMany({
     orderBy: {
       createdAt: "desc",

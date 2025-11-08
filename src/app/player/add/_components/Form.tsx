@@ -70,6 +70,7 @@ const Form = ({ trainers, player }: { trainers: User[]; player?: Player }) => {
         }),
     initialState
   );
+  console.log(state);
 
   useEffect(() => {
     if (state?.message) {
@@ -131,7 +132,7 @@ const Form = ({ trainers, player }: { trainers: User[]; player?: Player }) => {
           <Card className="lg:col-span-3 border-l-4 border-l-primary">
             <CardHeader className="pb-3">
               <CardTitle>
-                {player ? "✏️ تحديث بيانات اللاعب" : "➕ إضافة لاعب جديد"}
+                {player ? "✏️ تحديث بيانات اللاعب" : " إضافة لاعب جديد"}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -152,7 +153,7 @@ const Form = ({ trainers, player }: { trainers: User[]; player?: Player }) => {
                   />
                   {state?.error?.name && (
                     <p className="text-destructive text-sm text-right">
-                      {state?.error?.name}
+                      {state?.error?.["name"]}
                     </p>
                   )}
                 </div>
@@ -171,6 +172,11 @@ const Form = ({ trainers, player }: { trainers: User[]; player?: Player }) => {
                     className="w-full text-right border-gray-300 focus:border-primary transition-colors"
                     placeholder="أدخل رقم الهاتف"
                   />
+                  {state?.error?.phone && (
+                    <p className="text-destructive text-sm text-right">
+                      {state?.error?.["phone"]}
+                    </p>
+                  )}
                 </div>
 
                 {/* Gender Field */}
@@ -231,6 +237,11 @@ const Form = ({ trainers, player }: { trainers: User[]; player?: Player }) => {
                     className="w-full text-right border-gray-300 focus:border-primary transition-colors"
                     placeholder="أدخل الرقم الوطني"
                   />
+                  {state?.error?.nationalNumber && (
+                    <p className="text-destructive text-sm text-right">
+                      {state?.error?.["nationalNumber"]}
+                    </p>
+                  )}
                 </div>
 
                 {/* Birthday Field */}
@@ -249,6 +260,11 @@ const Form = ({ trainers, player }: { trainers: User[]; player?: Player }) => {
                     }
                     className="w-full text-right border-gray-300 focus:border-primary transition-colors"
                   />
+                  {state?.error?.birthday && (
+                    <p className="text-destructive text-sm text-right">
+                      {state?.error?.["birthday"]}
+                    </p>
+                  )}
                 </div>
 
                 {/* Contract Start Date Field */}
@@ -270,6 +286,11 @@ const Form = ({ trainers, player }: { trainers: User[]; player?: Player }) => {
                     }
                     className="w-full text-right border-gray-300 focus:border-primary transition-colors"
                   />
+                  {state?.error?.contractstartdate && (
+                    <p className="text-destructive text-sm text-right">
+                      {state?.error?.["contractstartdate"]}
+                    </p>
+                  )}
                 </div>
 
                 {/* Contract End Date Field */}
@@ -291,6 +312,11 @@ const Form = ({ trainers, player }: { trainers: User[]; player?: Player }) => {
                     }
                     className="w-full text-right border-gray-300 focus:border-primary transition-colors"
                   />
+                  {state?.error?.contractenddate && (
+                    <p className="text-destructive text-sm text-right">
+                      {state?.error?.["contractenddate"]}
+                    </p>
+                  )}
                 </div>
               </div>
             </CardContent>
