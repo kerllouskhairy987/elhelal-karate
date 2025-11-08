@@ -4,6 +4,8 @@ import "./globals.css";
 import Layout from "@/components/ui/Layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ToastContainer } from 'react-toastify';
+import { cookies } from "next/headers";
+import { verifyToken } from "@/utils/verifyToken";
 
 const cairo = Cairo({
   subsets: ["arabic"],
@@ -17,11 +19,16 @@ export const metadata: Metadata = {
   description: "نظام حضور وانصراف اللاعبين للكاراتي",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const cookieStore = await cookies();
+  const token = cookieStore.get("JwtToken")?.value || "";
+  const user = verifyToken(token);
+
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head />
@@ -33,7 +40,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ToastContainer position="bottom-center" />
-          <Layout>{children}</Layout>
+          <Layout user={user}>{children}</Layout>
         </ThemeProvider>
       </body>
     </html>

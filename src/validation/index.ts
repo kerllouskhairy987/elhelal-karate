@@ -22,7 +22,12 @@ export const updateUserSchema = z.object({
     .string()
     .min(1, { message: "الاسم مطلوب" })
     .max(255, { message: "الاسم لا يزيد عن 255 حرف" }),
-  password: z.string().min(6, { message: "الرقم السري يجب الا يقل عن 6 احرف" }),
+  password: z
+    .string()
+    .optional()
+    .refine((val) => !val || val.length >= 6, {
+      message: "الرقم السري يجب ألا يقل عن 6 أحرف",
+    }),
 });
 
 export const playerSchema = z.object({

@@ -33,7 +33,8 @@ const UploadImage = async ({
     const filePath = path.join(uploadsDir, uniqueName);
     fs.writeFileSync(filePath, buffer);
 
-    const imageUrl = `${process.env.NEXT_PUBLIC_URL}/uploads/${uniqueName}`;
+    const DOMAIN = process.env.NEXT_PUBLIC_URL as string;
+    const imageUrl = `${DOMAIN}/uploads/${uniqueName}`;
 
     return {
       imageUrl,

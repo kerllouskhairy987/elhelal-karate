@@ -2,15 +2,17 @@
 
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { CircleUser, House, PanelRightClose } from "lucide-react";
+import { CircleUser, House, NotebookPen, PanelRightClose, User } from "lucide-react";
 import logo from "../../../public/Logo.jpg";
 import Link from "../Link";
+import { UserRole } from "@prisma/client";
 
 interface SidebarProps {
   isOpen: boolean;
   sidebarWidth: number;
   sidebarOpen: boolean;
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  role: UserRole | undefined
 }
 
 const sidebarMenus = [
@@ -18,16 +20,25 @@ const sidebarMenus = [
     label: "الرئيسية",
     icon: House,
     href: "/",
+    clientRole: UserRole.ADMIN,
   },
   {
     label: "المدربين",
     icon: CircleUser,
     href: "/trainer",
+    clientRole: UserRole.ADMIN,
   },
   {
     label: "اللاعبين",
     icon: CircleUser,
     href: "/player",
+    clientRole: UserRole.TRAINER,
+  },
+  {
+    label: "الغياب",
+    icon: NotebookPen,
+    href: "/attendance",
+    clientRole: UserRole.TRAINER,
   },
 ];
 
@@ -35,8 +46,10 @@ export default function Sidebar({
   isOpen,
   sidebarWidth,
   setSidebarOpen,
+  role
 }: SidebarProps) {
   const pathname = usePathname();
+  console.log(role)
 
   return (
     <aside
@@ -78,29 +91,60 @@ export default function Sidebar({
 
         {/* Main Menu */}
         <nav className="flex-1 overflow-y-auto p-2" dir="rtl">
-          {sidebarMenus.map((menu) => {
-            const Icon = menu.icon;
-            const isActive = pathname === menu.href;
+          {
+            role === UserRole.ADMIN
+              ? (
+                sidebarMenus.map((menu) => {
+                  const Icon = menu.icon;
+                  const isActive = pathname === menu.href;
 
-            return (
-              <Link
-                key={menu.label}
-                href={menu.href ?? "/"}
-                className={`flex items-center mb-4 text-sm rounded-lg cursor-pointer transition-all duration-200 py-3
+                  return (
+                    <Link
+                      key={menu.label}
+                      href={menu.href ?? "/"}
+                      className={`flex items-center mb-4 text-sm rounded-lg cursor-pointer transition-all duration-200 py-3
                   ${isOpen
-                    ? "justify-start text-right px-3"
-                    : "justify-center px-0"
-                  }
+                          ? "justify-start text-right px-3"
+                          : "justify-center px-0"
+                        }
                   ${isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                  }`}
-              >
-                <Icon className={`w-5 h-5 ${isOpen ? "ml-2" : ""}`} />
-                {isOpen && <span>{menu.label}</span>}
-              </Link>
-            );
-          })}
+                          ? "bg-primary text-primary-foreground"
+                          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                        }`}
+                    >
+                      <Icon className={`w-5 h-5 ${isOpen ? "ml-2" : ""}`} />
+                      {isOpen && <span>{menu.label}</span>}
+                    </Link>
+                  );
+                })
+              )
+              : (
+                sidebarMenus.filter((menu) => menu.clientRole === role).map((menu) => {
+                  const Icon = menu.icon;
+                  const isActive = pathname === menu.href;
+
+                  return (
+                    <Link
+                      key={menu.label}
+                      href={menu.href ?? "/"}
+                      className={`flex items-center mb-4 text-sm rounded-lg cursor-pointer transition-all duration-200 py-3
+                  ${isOpen
+                          ? "justify-start text-right px-3"
+                          : "justify-center px-0"
+                        }
+                  ${isActive
+                          ? "bg-primary text-primary-foreground"
+                          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                        }`}
+                    >
+                      <Icon className={`w-5 h-5 ${isOpen ? "ml-2" : ""}`} />
+                      {isOpen && <span>{menu.label}</span>}
+                    </Link>
+                  );
+                })
+              )
+          }
+
         </nav>
 
         {/* Footer */}

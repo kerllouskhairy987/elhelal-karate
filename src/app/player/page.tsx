@@ -13,8 +13,16 @@ import { Eye, Edit, PlusCircle, Files } from "lucide-react";
 import { prisma } from "@/utils/prisma";
 import Link from "@/components/Link";
 import DeletePlayer from "./_components/DeletePlayer";
+import { cookies } from "next/headers";
+import { verifyToken } from "@/utils/verifyToken";
+import { UserRole } from "@prisma/client";
 
 export default async function PlayersPage() {
+  const storeCookie = await cookies();
+  const token = storeCookie.get("JwtToken")?.value || "";
+  const user = verifyToken(token);
+  const role = user?.role;
+
   const players = await prisma.player.findMany({
     include: { user: true }, // ✅ يجيب بيانات المدرب
     orderBy: { createdAt: "desc" },
@@ -24,12 +32,16 @@ export default async function PlayersPage() {
     <main className="p-6">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl font-bold">قائمة اللاعبين</h1>
-        <Link href="/player/add">
-          <Button className="flex items-center gap-2">
-            <PlusCircle className="w-4 h-4" />
-            إضافة لاعب
-          </Button>
-        </Link>
+        {
+          role === UserRole.ADMIN && (
+            <Link href="/player/add">
+              <Button className="flex items-center gap-2">
+                <PlusCircle className="w-4 h-4" />
+                إضافة لاعب
+              </Button>
+            </Link>
+          )
+        }
       </div>
 
       <Table className="w-full overflow-hidden">
@@ -40,9 +52,9 @@ export default async function PlayersPage() {
             <TableHead className="text-center">رقم الهاتف</TableHead>
             <TableHead className="text-center">النوع</TableHead>
             <TableHead className="text-center">تاريخ الميلاد</TableHead>
-            <TableHead className="text-center">المدرب المسؤول</TableHead>{" "}
-            {/* ✅ */}
-            <TableHead className="text-end">الإجراءات</TableHead>
+            <TableHead className={`${role === UserRole.ADMIN ? "text-center" : "text-end"}`}>المدرب المسؤول</TableHead>{" "}
+
+            {role === UserRole.ADMIN ? <TableHead className="text-end">الإجراءات</TableHead> : null}
           </TableRow>
         </TableHeader>
 
@@ -55,11 +67,11 @@ export default async function PlayersPage() {
               <TableCell className="text-center">
                 {player.birthday.toLocaleDateString("ar-sa")}
               </TableCell>
-              <TableCell className="text-center">
+              <TableCell className={`${role === UserRole.ADMIN ? "text-center" : "text-end"}`}>
                 {player.user?.name || "—"} {/* ✅ عرض اسم المدرب */}
               </TableCell>
 
-              <TableCell className="flex justify-end gap-2">
+              {role === UserRole.ADMIN && <TableCell className="flex justify-end gap-2">
                 <Button variant="ghost" size="icon" title="عرض التفاصيل">
                   <Link href={`/player/${player.id}/adddocument`}>
                     <Files className="w-4 h-4 text-blue-600" />
@@ -76,14 +88,14 @@ export default async function PlayersPage() {
                   </Link>
                 </Button>
                 <DeletePlayer id={player.id} publicId={player.publicId} />
-              </TableCell>
+              </TableCell>}
             </TableRow>
           ))}
         </TableBody>
 
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={5}>عدد اللاعبين</TableCell>
+            <TableCell colSpan={role === UserRole.ADMIN ? 5 : 4}>عدد اللاعبين</TableCell>
             <TableCell className="text-end">({players.length}) لاعب</TableCell>
           </TableRow>
         </TableFooter>

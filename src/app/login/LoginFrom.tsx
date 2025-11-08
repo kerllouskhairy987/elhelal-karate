@@ -31,7 +31,7 @@ const LoginFrom = ({ role }: { role: string | undefined }) => {
             if (role === UserRole.ADMIN) {
                 router.replace("/")
             } else {
-                router.replace("/players")
+                router.replace("/player")
             }
         }
         if ((state?.status === 400 || state?.status === 401 || state?.status === 500) && state?.message && !pending) {

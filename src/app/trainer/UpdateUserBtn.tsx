@@ -137,9 +137,9 @@ const UpdateUserBtn = ({ id }: IProps) => {
                 name="password"
                 id="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="ادخل الرقم السري للمدرب"
+                // placeholder="ادخل الرقم السري للمدرب"
                 className="text-xs"
-                defaultValue={userInfo?.password}
+                // defaultValue={userInfo?.password}
               />
               <div className="flex items-center justify-end gap-1 -mt-1 text-xs">
                 <Input

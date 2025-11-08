@@ -3,11 +3,13 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import Header from "../header";
 import Sidebar from "../sidepar/Sidebar";
+import { JWTPayload } from "@/types";
 interface LayoutProps {
   children: React.ReactNode;
+  user: JWTPayload | null;
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, user }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const sidebarWidth = 238;
   const navbarHeight = 73;
@@ -23,6 +25,7 @@ export default function Layout({ children }: LayoutProps) {
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
             sidebarWidth={sidebarWidth}
+            user={user}
           />
 
           {/* Sidebar */}
@@ -31,6 +34,7 @@ export default function Layout({ children }: LayoutProps) {
             setSidebarOpen={setSidebarOpen}
             isOpen={sidebarOpen}
             sidebarWidth={sidebarWidth}
+            role={user?.role}
           />
         </>
       )}

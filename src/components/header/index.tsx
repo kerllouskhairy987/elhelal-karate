@@ -1,6 +1,6 @@
 import logo from "../../../public/Logo.jpg";
 import { Menu } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,25 +12,48 @@ import {
 import Link from "next/link";
 import { ModeToggle } from "../ModeToggle";
 import Image from "next/image";
+import { JWTPayload } from "@/types";
+import { logoutAction } from "@/app/actions/auth/logout";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import Loader from "../ui/Loader";
 
 interface NavbarProps {
   sidebarOpen: boolean;
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
   sidebarWidth: number;
+  user: JWTPayload | null;
 }
 
 export default function Header({
   sidebarOpen,
   setSidebarOpen,
   sidebarWidth,
+  user
 }: NavbarProps) {
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter((segment) => segment !== "");
   console.log(pathname + "\n" + pathSegments);
 
-  const displayName = "مصطفى مح...";
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  const handleLogout = () => { };
+  const handleLogout = async () => {
+    try {
+      setIsLoading(true);
+      await logoutAction();
+      setIsLoading(false);
+      toast.success("تم تسجيل الخروج بنجاح", { autoClose: 5000 });
+      router.replace("/login");
+
+    } catch (error) {
+      console.log(error)
+      toast.error("حدث خطاء في السرفر", { autoClose: 5000 });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  console.log(user?.name)
 
   return (
     <nav
@@ -80,11 +103,16 @@ export default function Header({
               >
                 {/* Avatar with initials */}
                 <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-primary/20 text-primary flex items-center justify-center">
-                  <span className="text-sm font-bold">MO</span>
+                  <span className="text-sm font-bold">
+                    {user?.name
+                      .split(" ")
+                      .map((name) => name.charAt(0))
+                      .join("")}
+                  </span>
                 </div>
                 <div className="flex  min-w-0 text-left">
-                  <h3 className="font-bold text-card-foreground text-sm truncate">
-                    {displayName}
+                  <h3 title={user?.name} className="max-w-18 line-clamp-1 font-bold text-card-foreground text-sm truncate">
+                    {user?.name}
                   </h3>
                 </div>
               </Button>
@@ -104,7 +132,7 @@ export default function Header({
                 onClick={handleLogout}
                 className="cursor-pointer text-destructive"
               >
-                تسجيل الخروج
+                { isLoading? <Loader /> : "تسجيل الخروج"}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

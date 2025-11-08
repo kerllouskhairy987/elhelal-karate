@@ -35,7 +35,7 @@ model Player {
   publicId          String
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   images Image[]
 
@@ -56,7 +56,7 @@ model Attendance {
   status   AttendanceStatus
   note     String?
   playerId Int
-  player   Player           @relation(fields: [playerId], references: [id])
+  player   Player           @relation(fields: [playerId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

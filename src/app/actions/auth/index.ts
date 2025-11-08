@@ -89,6 +89,7 @@ export async function loginAction(
 
         revalidatePath("/")
         revalidatePath("/trainer")
+        revalidatePath("/player/add");
         return {
             message: "تم تسجيل الدخول بنجاح",
             error: {},
@@ -176,6 +177,7 @@ export const signupAction = async (
         })
         revalidatePath("/");
         revalidatePath("/trainer");
+        revalidatePath("/player/add");
         return {
             message: "تم إنشاء الحساب بنجاح",
             error: {},
@@ -230,6 +232,19 @@ export const updateUserAction = async (
     const role = formData.get("role") as UserRole;
 
     try {
+        if (password === "") {
+            // Update User
+            await prisma.user.update({
+                where: {
+                    email
+                },
+                data: {
+                    name,
+                    role,
+                },
+            })
+        }
+
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
         // Update User
@@ -246,6 +261,7 @@ export const updateUserAction = async (
 
         revalidatePath("/");
         revalidatePath("/trainer");
+        revalidatePath("/player/add");
 
         return {
             message: "تم التحديث بنجاح",
@@ -287,6 +303,7 @@ export async function deleteUserAction(id: string) {
         console.log("Deleted User:", deletedUser);
         revalidatePath("/");
         revalidatePath("/trainer");
+        revalidatePath("/player/add");
         return { success: true, error: "تم حذف المستخدم بنجاح" };
     } catch (error) {
         console.error("Error deleting user:", error);
