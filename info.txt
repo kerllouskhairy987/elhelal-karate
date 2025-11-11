@@ -7,4 +7,5 @@ task {
 
 chatGPT {
     https://chatgpt.com/c/690a504c-6e84-8331-8abe-647db16c88ef
+    https://chatgpt.com/c/690e0846-6410-832c-a487-7c3af3355bdf
 }
